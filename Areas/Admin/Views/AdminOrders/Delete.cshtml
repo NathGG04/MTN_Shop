@@ -1,0 +1,134 @@
+﻿@model NTM_SHOP.Models.Order
+
+@{
+    ViewData["Title"] = "Thông tin đơn hàng chuẩn bị xóa : " + Model.OrderId;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    List<NTM_SHOP.Models.OrderDetail> orderDetails = ViewBag.Chitiet;
+
+}   
+
+<div class="page-container">
+
+
+    <!-- Content Wrapper START -->
+    <div class="main-content">
+        <div class="page-header">
+
+            <div class="header-sub-title">
+                <nav class="breadcrumb breadcrumb-dash">
+                    <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Trang chủ</a>
+                    <a class="breadcrumb-item" asp-area="Admin" asp-controller="AdminOrders" asp-action="Index">Danh sách đơn hàng</a>
+                    <span class="breadcrumb-item active">Thông tin đơn hàng</span>
+                </nav>
+            </div>
+        </div>
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+
+                    <div id="invoice" class="p-h-30">
+
+                        <div class="row  ">
+                            <div class="col-sm-8">
+                                <div class="text-dark text-uppercase d-inline-block">
+                                    <h3>THÔNG TIN KHÁCH HÀNG</h3>
+                                </div>
+                                <img class="img-fluid" src="assets/images/logo/logo.png" alt="">
+                                <address class="p-l-10 m-t-10">
+                                    <span class="font-weight-semibold text-dark">Tên người nhận: @Model.Customer.FullName</span><br>
+                                    <span>Địa chỉ: @ViewBag.FullAdress</span><br>
+                                    <span>Email: @Model.Customer.Email</span><br>
+                                    <abbr class="text-dark" title="Phone">Số điện thoại:</abbr>
+                                    <span>@Model.Customer.Phone</span>
+                                </address>
+                            </div>
+                            <div class="col-sm-4">
+                                <div>
+                                    <div class="text-dark text-uppercase d-inline-block">
+                                        <h3>THÔNG TIN MUA HÀNG</h3>
+                                    </div>
+                                    <div class="float-right">#@Model.OrderId</div>
+                                </div>
+                                <div class="text-dark  d-inline-block m-t-10">
+                                    <span class="font-weight-semibold text-dark">Ngày mua :</span>
+                                </div>
+                                <div class="float-right">@Model.OrderDate</div>
+                                <div class="text-dark  d-inline-block">
+                                    <span class="font-weight-semibold text-dark">Ngày giao hàng :</span>
+                                </div>
+                                <div class="float-right">@Model.ShipDate</div>
+                                <br />
+                                <div class="text-dark d-inline-block">
+                                    <span class="font-weight-semibold text-dark">Trạng thái đơn hàng :</span>
+                                </div>
+                                <div class="float-right">@Model.TransactStatus.Status</div>
+                            </div>
+                        </div>
+                        <div class="m-t-20">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Thứ tự</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Số lượng</th>
+                                            <th>Đơn giá</th>
+                                            <th>Thành tiền</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (orderDetails != null && orderDetails.Count() > 0)
+                                        {
+                                            int i = 1;
+                                            @foreach (var item in orderDetails)
+                                            {
+                                                string url = $"/{item.product.Alias}-{item.product.ProductId}";
+                                                <tr>
+                                                    <th>@i</th>
+                                                    <td><a target="_blank" href="@url">@item.product.ProductName</a></td>
+                                                    <td>@item.Quantity</td>
+                                                    <td>@item.Price.Value.ToString("#,##0") VNĐ</td>
+                                                    <td>@item.TotalMoney.Value.ToString("#,##0") VNĐ</td>
+                                                </tr>
+                                                i++;
+                                            }
+                                        }
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row m-t-30 lh-1-8">
+                                <div class="col-sm-4">
+                                    <form asp-action="Delete" asp-route-id="@Model.OrderId">
+                                        <input type="hidden" asp-for="OrderId" />
+                                        <input type="submit" value="Xác nhận xóa đơn hàng" class="btn btn-danger" />
+                                    </form>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="float-right text-right">
+                                        <h3><span class="font-weight-semibold text-dark">Tổng tiền :</span> @Model.TotalMoney.ToString("#,##0") VNĐ</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Content Wrapper END -->
+    <!-- Footer START -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="m-b-0">Copyright © 2019 Theme_Nate. All rights reserved.</p>
+            <span>
+                <a href="" class="text-gray m-r-15">Term &amp; Conditions</a>
+                <a href="" class="text-gray">Privacy &amp; Policy</a>
+            </span>
+        </div>
+    </footer>
+    <!-- Footer END -->
+
+</div>

@@ -1,0 +1,83 @@
+{
+  "_from": "bootstrap",
+  "_id": "bootstrap@5.3.3",
+  "_inBundle": false,
+  "_location": "/bootstrap",
+  "author": {
+    "name": "The Bootstrap Authors",
+    "url": "https://github.com/twbs/bootstrap/graphs/contributors"
+  },
+  "bugs": {
+    "url": "https://github.com/twbs/bootstrap/issues"
+  },
+  "bundleDependencies": false,
+  "contributors": [
+    {
+      "name": "Twitter, Inc."
+    }
+  ],
+  "dependencies": {
+    "@popperjs/core": "^2.11.8"
+  },
+  "deprecated": false,
+  "description": "The most popular front-end framework for developing responsive, mobile first projects on the web. (Clean build configuration for Node 24+)",
+  "devDependencies": {
+    "@babel/cli": "^7.23.9",
+    "@babel/core": "^7.24.0",
+    "@babel/preset-env": "^7.24.0",
+    "autoprefixer": "^10.4.18",
+    "clean-css-cli": "^5.6.3",
+    "cross-env": "^7.0.3",
+    "jquery": "^3.7.1",
+    "npm-run-all": "^4.1.5",
+    "postcss-cli": "^11.0.0",
+    "rollup": "^4.12.1",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "sass": "^1.72.0",
+    "uglify-js": "^3.17.4"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "files": [
+    "dist/{css,js}/*.{css,js,map}",
+    "js/{src,dist}/**/*.{js,map}",
+    "scss/**/*.scss"
+  ],
+  "homepage": "https://getbootstrap.com/",
+  "keywords": [
+    "css",
+    "sass",
+    "mobile-first",
+    "responsive",
+    "front-end",
+    "framework",
+    "web"
+  ],
+  "license": "MIT",
+  "main": "dist/js/bootstrap.js",
+  "name": "bootstrap",
+  "peerDependencies": {
+    "sass": "^1.32.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/twbs/bootstrap.git"
+  },
+  "sass": "scss/bootstrap.scss",
+  "scripts": {
+    "css-compile": "npm-run-all --parallel css-compile-*",
+    "css-compile-main": "sass --style expanded --source-map scss/bootstrap.scss dist/css/bootstrap.css",
+    "css-prefix": "postcss --config build/postcss.config.js --replace \"dist/css/*.css\" \"!dist/css/*.min.css\"",
+    "css-minify": "cleancss --level 1 --format breaksWith=lf --source-map --source-map-inline-sources --output dist/css/bootstrap.min.css dist/css/bootstrap.css",
+    "css": "npm-run-all css-compile css-prefix css-minify",
+    "js-compile": "rollup --environment BUNDLE:true --config build/rollup.config.js --sourcemap",
+    "js-minify": "uglifyjs --compress typeofs=false --mangle --comments \"/^!/\" --source-map \"content=dist/js/bootstrap.js.map,includeSources,url=bootstrap.min.js.map\" --output dist/js/bootstrap.min.js dist/js/bootstrap.js",
+    "dist": "npm-run-all --parallel css js",
+    "test": "echo \"Running basic build test...\" && npm run dist"
+  },
+  "style": "dist/css/bootstrap.css",
+  "version": "5.3.3",
+  "version_short": "5.3"
+}

@@ -1,0 +1,218 @@
+﻿@model NTM_SHOP.ModelViews.HomeViewVM
+@using PagedList.Core.Mvc
+@{
+    ViewData["Title"] = "Bách hóa tại nhà";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<NTM_SHOP.Models.Product> allProduct = ViewBag.AllProducts;
+}
+
+@section Styles {
+
+    <style type="text/css">
+        .bg-image {
+            background-image: url('@Url.Content("~/assets/images/breadcrumb/bg.jpg")');
+            background-size: cover;
+
+        }
+                .bg2-image {
+            background-image: url('@Url.Content("~/assets/images/breadcrumb/bg1.jpg")');
+            background-size: cover;
+
+        }
+    </style>
+}
+<!-- Begin Slider Area -->
+<div class="slider-area">
+
+    <!-- Main Slider -->
+    <div class="swiper-container main-slider swiper-arrow bg-image">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide animation-style-01">
+                <div class="slide-inner bg-height bg-image">
+
+                    <div class="container">
+                        <div class="parallax-with-content">
+                            <div class="slide-content">
+                                <span class="sub-title mb-3 text-white-50" style="font-weight: bold">KTNT SHOP</span>
+                                <h2 class="title mb-9 text-white" style="font-weight: bold">Đồng hành cùng ước mơ của bạn</h2>
+                                @*<div class="button-wrap">
+                                    <a class="btn btn-custom-size lg-size btn-primary btn-white-hover rounded-0" href="/shop.html">Shop Now</a>
+                                </div>*@
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide animation-style-01">
+                <div class="slide-inner bg-height bg2-image">
+
+                    <div class="container">
+                        <div class="parallax-with-content">
+                            <div class="slide-content">
+                                @*<span class="sub-title mb-3 text-white-50" style="font-weight: bold">Ultrboost DNA 21</span>
+                                <h2 class="title mb-9  text-white" style="font-weight: bold">Đồng hành cùng sức khỏe của bạn</h2>
+                                <div class="button-wrap">
+                                    <a class="btn btn-custom-size lg-size btn-primary btn-white-hover rounded-0" href="shop.html">Shop Now</a>
+                                </div>*@
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination with-bg d-md-none"></div>
+
+        <!-- Add Arrows -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+
+</div>
+<!-- Slider Area End Here -->
+<!-- Begin Shipping Area -->
+@*<div class="shipping-area section-space-top-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="shipping-item">
+                        <div class="shipping-img">
+                            <img src="~/assets/images/shipping/icon/plane.png" alt="Shipping Icon">
+                        </div>
+                        <div class="shipping-content">
+                            <h5 class="title">Free Shipping</h5>
+                            <p class="short-desc mb-0">Free Home Delivery Offer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-6 pt-md-0">
+                    <div class="shipping-item">
+                        <div class="shipping-img">
+                            <img src="~/assets/images/shipping/icon/earphones.png" alt="Shipping Icon">
+                        </div>
+                        <div class="shipping-content">
+                            <h5 class="title">Online Support</h5>
+                            <p class="short-desc mb-0">24/7 Online Support Provide</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 pt-6 pt-lg-0">
+                    <div class="shipping-item">
+                        <div class="shipping-img">
+                            <img src="~/assets/images/shipping/icon/shield.png" alt="Shipping Icon">
+                        </div>
+                        <div class="shipping-content">
+                            <h5 class="title">Secure Payment</h5>
+                            <p class="short-desc mb-0">Fully Secure Payment System</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+<!-- Shipping Area End Here -->
+<!-- Begin Banner Area -->
+
+<div class="banner-area section-space-top-100">
+    <div class="container">
+        <h1 style="margin-bottom:30px;text-align:center">Best Seller</h1>
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="nav product-tab-nav pb-10" id="myTab" role="tablist" style="margin:auto">
+
+                    <li class="nav-item" role="presentation">
+                        <a class="active" id="all-item-tab" data-bs-toggle="tab" href="#all-item" role="tab" >
+                            Tất cả sản phẩm
+                        </a>
+                    </li>
+                    @foreach (var item in Model.Products)
+                    {
+                        <li class="nav-item" role="presentation">
+                            <a id="fresh-fruits-tab" data-bs-toggle="tab" href="#@item.category.Alias" role="tab">
+                                @item.category.CatName
+                            </a>
+                        </li>
+                    }
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="all-items" role="tabpanel" aria-labelledby="all-items">
+                        @await Html.PartialAsync("_ListProductPartialView", allProduct)
+                    </div>
+                    @foreach (var item in Model.Products)
+                    {
+                        <div class="tab-pane fade" id="@item.category.Alias" role="tabpanel" aria-labelledby="@item.category.Alias">
+                            @await Html.PartialAsync("_ListProductPartialView", item.lsProducts)
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Banner Area End Here -->
+<!-- Begin Product Area -->
+<!-- Product Area End Here -->
+<!-- Begin Blog Area -->
+@if (Model.TinTucs != null && Model.TinTucs.Count() > 0)
+{
+    <div class="blog-area section-space-y-axis-100">
+        <div class="container">
+            <div class="section-title text-center pb-55">
+                <h2 class="title mb-0">Latest Blog</h2>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="swiper-container blog-slider">
+                        <div class="swiper-wrapper">
+                            @foreach (var item in Model.TinTucs)
+                            {
+                                string url = $"/tin-tuc/{item.Alias}-{item.PostId}.html";
+                                <div class="swiper-slide">
+                                    <div class="blog-item">
+                                        <div class="blog-img img-zoom-effect">
+                                            <a href="@url">
+                                                <img class="img-full" src="~/images/news/@item.Thumb" alt="Blog Image">
+                                            </a>
+                                        </div>
+                                        <div class="blog-content">
+                                            <div class="blog-meta text-dim-gray pb-3">
+                                                <ul>
+                                                    <li class="date"><i class="fa fa-calendar-o me-2"></i>@item.CreateDate</li>
+                                                    <li>
+                                                        <span class="comments me-3">
+                                                            <a href="javascript:void(0)">2 Comments</a>
+                                                        </span>
+                                                        <span class="link-share">
+                                                            <a href="javascript:void(0)">Share</a>
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <h5 class="title mb-4">
+                                                <a href="@url">@item.Title</a>
+                                            </h5>
+                                            <p class="short-desc mb-5">@item.Scontents</p>
+                                            <div class="button-wrap">
+                                                <a class="btn btn-custom-size btn-dark btn-lg rounded-0" href="@url">Xem thêm</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                        <!-- Add Arrows -->
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Blog Area End Here -->

@@ -1,0 +1,70 @@
+﻿@model NTM_SHOP.ModelViews.LoginViewModel
+
+@{
+    ViewData["Title"] = "Đăng nhập";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+
+    <style type="text/css">
+        .bg-image {
+            background-image: url('@Url.Content("~/assets/images/breadcrumb/bg.jpg")');
+            background-size: cover;
+            height: 600px;
+        }
+    </style>
+}
+<main class="main-content">
+    <div class="breadcrumb-area breadcrumb-height bg-image">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-item">
+                        <h1 class="breadcrumb-heading text-white">NTM SHOP</h1>
+                        <ul>
+                            <li>
+                                <a class="text-white" href="/">Tài khoản <i class="text-white pe-7s-angle-right"></i></a>
+                            </li>
+                            <li class="text-white">ĐĂNG NHẬP TÀI KHOẢN</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="login-register-area section-space-y-axis-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 pt-10 pt-lg-0">
+                    <form asp-action="Login">
+                        <input hidden asp-for="ReturnUrl" />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="login-form">
+                            <h4 class="login-title">Đăng nhập tài khoản</h4>
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <label>Địa chỉ Email*</label>
+                                    <input type="email" asp-for="UserName" placeholder="Địa chỉ Email">
+                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label>Mật khẩu</label>
+                                    <input type="password" asp-for="Password" placeholder="Mật khẩu">
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-12">
+                                    <button class="btn btn-custom-size lg-size btn-secondary btn-primary-hover rounded-0">Đăng nhập</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+

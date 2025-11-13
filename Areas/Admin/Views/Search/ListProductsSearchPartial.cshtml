@@ -1,0 +1,45 @@
+﻿@using NTM_SHOP.Models
+@model List<Product>
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ProductId
+            </td>
+            <td>
+                <div class="d-flex align-items-center">
+                    <img class="img-fluid rounded" src="assets/images/others/thumb-9.jpg" style="max-width: 60px" alt="">
+                    <h6 class="m-b-0 m-l-10">@item.ProductName</h6>
+                </div>
+            </td>
+            <td>@item.Cat.CatName</td>
+            <td>@item.Price.Value.ToString("#,##0")VNĐ</td>
+            <td>@item.UnitslnStock</td>
+            <td>
+                @if (item.UnitslnStock.Value > 0)
+                {
+                    <div class="d-flex align-items-center">
+                        <div class="badge badge-success badge-dot m-r-10"></div>
+                        <div>Còn hàng</div>
+                    </div>
+                }
+                else
+                {
+                    <div class="d-flex align-items-center">
+                        <div class="badge badge-success badge-dot m-r-10"></div>
+                        <div>Hết hàng</div>
+                    </div>
+                }
+
+            </td>
+            <td>
+                <a asp-area="Admin" asp-controller="AdminProducts" asp-action="Details" asp-route-id="@item.ProductId" class="btn btn-primary btn-tone m-r-5">View</a>
+                <a asp-area="Admin" asp-controller="AdminProducts" asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-secondary btn-tone m-r-5">Edit</a>
+                <a asp-area="Admin" asp-controller="AdminProducts" asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-success btn-tone m-r-5">Delete</a>
+            </td>
+        </tr>
+    }
+}

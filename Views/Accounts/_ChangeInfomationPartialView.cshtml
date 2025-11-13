@@ -1,0 +1,84 @@
+﻿@model NTM_SHOP.ModelViews.ChangeInfoViewModel 
+
+@{
+    // Lấy dữ liệu Customer. Nếu ViewData["CustomerInfo"] là null, 'customer' sẽ là null.
+    NTM_SHOP.Models.Customer customer = ViewData["CustomerInfo"] as NTM_SHOP.Models.Customer;
+    var selectList = ViewData["lsTinhThanh"] as SelectList;
+
+    // Khởi tạo các biến string để điền vào form (an toàn với null)
+    // Nếu customer là null, tất cả sẽ là string.Empty
+    string locationId = customer?.LocationId?.ToString() ?? string.Empty;
+    string district = customer?.District?.ToString() ?? string.Empty;
+    string ward = customer?.Ward?.ToString() ?? string.Empty;
+    string fullName = customer?.FullName ?? string.Empty;
+    string phone = customer?.Phone ?? string.Empty;
+    string address = customer?.Address ?? string.Empty;
+
+
+    // Gán giá trị mặc định vào Model để asp-for tự động hiển thị
+    // Cách này AN TOÀN hơn việc dùng thuộc tính 'value' trong input
+    Model.FullName = fullName;
+    Model.Phone = phone;
+    Model.Address = address;
+  
+}
+
+<div class="myaccount-details">
+    <form asp-controller="Accounts" asp-action="ChangeInfomation" method="post" class="myaccount-form">
+        <div class="myaccount-form-inner">
+            <div class="single-input">
+                <label>Họ và Tên</label>
+                <input asp-for="FullName" type="text" > 
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="single-input">
+                <label>Số điện thoại</label>
+                <input asp-for="Phone" type="tel" >
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="single-input">
+                <label>Địa chỉ</label>
+                <input asp-for="Address" type="text" >
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="single-input">
+                <label>Tỉnh Thành</label>
+                <select asp-for="TinhThanh"
+                        class="form-control"
+                        asp-items="@selectList"
+                        id="ddlTinhThanh">
+                    @* ⬅️ THÊM ID NÀY *@
+
+                    <option value="0" disabled selected>-- Chọn Tỉnh/Thành phố --</option>
+
+                </select>
+                <span asp-validation-for="TinhThanh" class="text-danger"></span>
+            </div>
+
+            <div class="single-input">
+                <label>Quận/Huyện</label>
+                <select asp-for="QuanHuyen"
+                        class="form-control"
+                        id="ddlQuanHuyen">
+                    @* ⬅️ THÊM ID NÀY *@
+                    <option value="0" disabled selected>Chọn Quận/Huyện</option>
+                </select>
+                <span asp-validation-for="QuanHuyen" class="text-danger"></span>
+            </div>
+            <div class="single-input">
+                <label>Xã/Phường</label>
+                <select asp-for="PhuongXa"
+                        class="form-control"
+                        id="ddlPhuongXa">
+                    @* ⬅️ THÊM ID NÀY *@
+                    <option value="0" disabled selected>Chọn Xã/Phường</option>
+                </select>
+                <span asp-validation-for="PhuongXa" class="text-danger"></span>
+            </div>
+
+            <div class="single-input single-input-btn">
+                <button class="btn btn-custom-size lg-size btn-secondary" type="submit">LƯU THAY ĐỔI</button>
+            </div>
+        </div>
+    </form>
+</div>

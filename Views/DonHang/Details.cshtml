@@ -1,0 +1,43 @@
+﻿@model NTM_SHOP.ModelViews.XemDonHang
+
+@if (Model != null )
+{
+<h3>Thông tin đơn hàng: #@Model.DonHang.OrderId</h3>
+<br />
+<p>Ngày đặt hàng: @Model.DonHang.OrderDate</p>
+<p>Trạng thái đơn hàng: @Model.DonHang.TransactStatus.Status</p>
+<p>Thành tiền: @Model.DonHang.TotalMoney.ToString("#,##0") $</p>
+<p>Ngày ship hàng: @Model.DonHang.ShipDate</p>
+<br />
+
+        <table class="table table-bordered table-hover">  
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Sản phẩm</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Đơn giá</th>
+                    <th scope="col">Tổng tiền</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.ChiTietDonHang != null)
+                {
+                    @foreach (var item in Model.ChiTietDonHang)
+                    {
+                        <tr>
+                            <th scope="col">#@item.OrderDetailId</th>
+                            <th>@item.product.ProductName</th>
+                            <th>@item.Quantity</th>
+                            <th>@item.Price</th>
+                            <th>@item.TotalMoney.Value.ToString("#,##0") $</th> 
+                        </tr>
+                    }
+                }
+
+
+
+            </tbody>
+        </table>
+}

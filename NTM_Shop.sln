@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36221.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NTM_SHOP", "..\..\NTM_SHOP\NTM_SHOP\NTM_SHOP.csproj", "{C87D0B5E-A446-44FF-B983-7E30563EAC37}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C87D0B5E-A446-44FF-B983-7E30563EAC37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C87D0B5E-A446-44FF-B983-7E30563EAC37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C87D0B5E-A446-44FF-B983-7E30563EAC37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C87D0B5E-A446-44FF-B983-7E30563EAC37}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7C6BFCFD-9EA9-431C-8D00-CDF6DEE5351B}
+	EndGlobalSection
+EndGlobal

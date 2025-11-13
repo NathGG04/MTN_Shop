@@ -1,0 +1,52 @@
+﻿@using NTM_SHOP.Models
+@model List<Product>
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        string url = $"/{item.Alias}-{item.ProductId}";
+        <div class="col-lg-4 col-sm-6">
+            <div class="product-item">
+                <div class="product-img img-zoom-effect">
+                    @if (item.BestSeller == true)
+                    {
+                        <div style="margin-bottom: 30px; z-index: 1; position: absolute; background-color: red; border-style: double; color: white; border-radius: 20px">
+                            <p style="background-color:;margin:auto;padding:0px 10px;color:white">Best Seller</p>
+                        </div>
+                    }
+                    <a href="@url">
+                        <img style="width: 100%; height:200px" class="img-full" src="~/images/products/@item.Thumb" alt="@item.Title">
+                    </a>
+                    <div class="product-add-action">
+                        <ul>
+                            <li>
+                                <a href="@url">
+                                    <i class="pe-7s-cart"></i>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="product-content">
+                    <a class="product-name" href="@url">@item.ProductName</a>
+                    <div class="price-box pb-1">
+                        <span class="new-price">@item.Price.Value.ToString("#,##0")</span>
+                    </div>
+                    <div class="rating-box">
+                        <ul>
+                            <li><i class="pe-7s-star"></i></li>
+                            <li><i class="pe-7s-star"></i></li>
+                            <li><i class="pe-7s-star"></i></li>
+                            <li><i class="pe-7s-star"></i></li>
+                            <li><i class="pe-7s-star"></i></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    }
+}

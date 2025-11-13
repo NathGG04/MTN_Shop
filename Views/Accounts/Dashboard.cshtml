@@ -1,0 +1,246 @@
+﻿@model NTM_SHOP.Models.Customer
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<NTM_SHOP.Models.Order> DanhSachDonHang = ViewBag.DonHang;
+    NTM_SHOP.ModelViews.ChangePasswordViewModel changepassword = new NTM_SHOP.ModelViews.ChangePasswordViewModel();
+    NTM_SHOP.ModelViews.ChangeInfoViewModel changeInfoVM = new NTM_SHOP.ModelViews.ChangeInfoViewModel()
+    {
+        FullName = Model.FullName,
+        Phone = Model.Phone,
+        Address = Model.Address,
+        // 💥 ĐẢM BẢO GÁN LOCATION ID HIỆN TẠI VÀO VIEWMODEL
+        TinhThanh = Model.LocationId.GetValueOrDefault(),
+        QuanHuyen = Model.District.GetValueOrDefault(),
+        PhuongXa = Model.Ward.GetValueOrDefault()
+
+    };
+}
+@section Styles {
+
+    <style type="text/css">
+        .bg-image {
+            background-image: url('@Url.Content("~/assets/images/breadcrumb/bg.jpg")');
+            background-size: cover;
+            height: 600px;
+        }
+    </style>
+}
+<main class="main-content">
+    <div class="breadcrumb-area breadcrumb-height bg-image">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-item">
+                        <h1 class="breadcrumb-heading text-white">NTM SHOP</h1>
+                        <ul>
+                            <li>
+                                <a class="text-white" href="/">Tài khoản <i class="text-white pe-7s-angle-right"></i></a>
+                            </li>
+                            <li class="text-white">THÔNG TIN TÀI KHOẢN</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="account-page-area section-space-y-axis-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <ul class="nav myaccount-tab-trigger" id="account-page-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="account-dashboard-tab" data-bs-toggle="tab" href="#account-dashboard" role="tab" aria-controls="account-dashboard" aria-selected="true">Thông tin tài khoản</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="account-orders-tab" data-bs-toggle="tab" href="#account-orders" role="tab" aria-controls="account-orders" aria-selected="false">Danh sách đơn hàng</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" id="account-details-tab" data-bs-toggle="tab" href="#account-details" role="tab" aria-controls="account-details" aria-selected="false">Thay đổi thông tin</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="account-logout-tab" href="/dang-xuat.html" role="tab" aria-selected="false">Đăng xuất</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-9">
+                    <div class="tab-content myaccount-tab-content" id="account-page-tab-content">
+                        <div class="tab-pane fade show active" id="account-dashboard" role="tabpanel" aria-labelledby="account-dashboard-tab">
+                            <div class="myaccount-dashboard">
+                                <p>
+                                    Xin chào, <b>@Model.FullName</b>
+                                </p>
+                                <p> Email: @Model.Email</p>
+                                <p> Số điện thoại: @Model.Phone</p>
+                                <p> Địa chỉ: @Model.Address</p>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="account-orders" role="tabpanel" aria-labelledby="account-orders-tab">
+                            <div class="myaccount-orders">
+                                <h4 class="small-title">Danh sách đơn hàng</h4>
+                                @if (DanhSachDonHang != null && DanhSachDonHang.Count() > 0)
+                                {
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover">
+                                            <tbody>
+                                                <tr>
+                                                    <td>ID</td>
+                                                    <td>Ngày</td>
+                                                    <td>Ngày vận chuyển</td>
+                                                    <td>Trạng thái</td>
+                                                    <td>Tổng tiền</td>
+                                                    <td></td>
+                                                </tr>
+                                                @foreach (var item in DanhSachDonHang)
+                                                {
+                                                    <tr>
+                                                        <td><a class="account-order-id" href="javascript:void(0)">@item.OrderId</a></td>
+                                                        <td>@item.OrderDate</td>
+                                                        <td>@item.ShipDate</td>
+                                                        <td>@item.TransactStatus.Status</td>
+                                                        <td>@item.TotalMoney.ToString("#,##0") $</td>
+                                                        <td>
+                                                            <a class="xemdonhang" href="javascript:void(0)" data-madonhang="@item.OrderId">Xem đơn hàng</a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                        <div id="records_table">
+
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <p>Chưa có đơn hàng!</p>
+                                }
+
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="account-address" role="tabpanel" aria-labelledby="account-address-tab">
+                            <div class="myaccount-address">
+                                <p>The following addresses will be used on the checkout page by default.</p>
+                                <div class="row">
+                                    <div class="col">
+                                        <h4 class="small-title">BILLING ADDRESS</h4>
+                                        <address>
+                                            @Model.Address
+                                        </address>
+                                    </div>
+                                    <div class="col">
+                                        <h4 class="small-title">SHIPPING ADDRESS</h4>
+                                        <address>
+                                            @Model.Address
+                                        </address>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="account-details" role="tabpanel" aria-labelledby="account-details-tab">
+
+                            <h4 class="small-title">Cập nhật thông tin cá nhân</h4>
+                            @* GỌI PARTIAL VIEW CHỈNH SỬA THÔNG TIN *@
+                            @await Html.PartialAsync("_ChangeInfomationPartialView", changeInfoVM)
+
+                            <hr class="my-5" /> @* Đường phân cách *@
+
+                            <h4 class="small-title">Đổi mật khẩu</h4>
+                            @* GỌI PARTIAL VIEW ĐỔI MẬT KHẨU *@
+                            @await Html.PartialAsync("_ChangePasswordPartialView", changepassword)
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".xemdonhang").click(function () {
+                var madonhang = $(this).attr("data-madonhang")
+                $.ajax({
+                    url: '/DonHang/Details',
+                    datatype: "json",
+                    type: "POST",
+                    data: { id: madonhang },
+                    async: true,
+                    success: function (results) {
+                        $("#records_table").html("");
+                        $("#records_table").html(results);
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            // 1. XỬ LÝ KHI CHỌN TỈNH/THÀNH (Tải Quận/Huyện)
+            $("#ddlTinhThanh").change(function () {
+                var TinhThanhId = $(this).val();
+                // ... (reset dropdowns) ...
+
+                if (TinhThanhId != 0) {
+                    $.ajax({
+                        url: '/Accounts/GetDistrictList',
+                        type: "POST",
+                        dataType: "json",
+                        data: { TinhThanhId: TinhThanhId },
+                        success: function (quanhuyens) {
+                            // Thêm header cho Quận/Huyện
+                            $("#ddlQuanHuyen").empty().append('<option value="0" disabled selected>-- Chọn Quận/Huyện --</option>');
+
+                            $.each(quanhuyens, function (index, quanhuyen) {
+                                // 💥 SỬA LỖI TẠI ĐÂY: DÙNG .value và .text (CAMELCASE)
+                                var value = quanhuyen.value;
+                                var text = quanhuyen.text;
+
+                                if (value !== undefined && text !== undefined) {
+                                    $("#ddlQuanHuyen").append('<option value="' + value + '">' + text + '</option>');
+                                }
+                            });
+                        },
+                        error: function (xhr) {
+                            console.error("Lỗi tải danh sách Quận/Huyện.");
+                        }
+                    });
+                }
+            });
+
+            // 2. XỬ LÝ KHI CHỌN QUẬN/HUYỆN (Tải Phường/Xã)
+            $("#ddlQuanHuyen").change(function () {
+                var QuanHuyenId = $(this).val();
+                // Reset dropdown Phường/Xã
+                $("#ddlPhuongXa").empty().append('<option value="0" disabled selected>-- Chọn Phường/Xã --</option>');
+
+                if (QuanHuyenId != 0) {
+                    $.ajax({
+                        url: '/Accounts/GetWardList',
+                        type: "POST",
+                        dataType: "json",
+                        data: { QuanHuyenId: QuanHuyenId },
+                        success: function (phuongxas) {
+                            // Thêm danh sách Phường/Xã
+                            $.each(phuongxas, function (index, phuongxa) {
+                                // 💥 SỬA LỖI TẠI ĐÂY: DÙNG .value và .text (CAMELCASE)
+                                $("#ddlPhuongXa").append('<option value="' + phuongxa.value + '">' + phuongxa.text + '</option>');
+                            });
+                        },
+                        error: function (xhr) {
+                            console.error("Lỗi tải danh sách Phường/Xã.");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
